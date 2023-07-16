@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
+import logo from '../fiszki.png';
 
 class Navigation extends React.Component {
     render() {
@@ -12,7 +13,9 @@ class Navigation extends React.Component {
                     {`
                     @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap');
                     .Navigation .container { max-width: 100%;}
-                    .nav-link {color: rgb(147, 164, 255); font-family: "Atkinson Hyperlegible"}
+                    .nav-link {color: rgb(147, 164, 255); font-family: "Atkinson Hyperlegible";}
+                    .main-nav {height: 10vh;}
+                    img {max-height: 10vh; object-fit: contain;}
                     `}
                 </style>
             <Container className="gradient-bg page-top">
@@ -20,7 +23,7 @@ class Navigation extends React.Component {
           </Container>
       <Navbar className="nav-down bg-white mediumnavigation border-bottom">
         <Container className="main-nav">
-          <Navbar.Brand href="#home">Fiszki</Navbar.Brand>
+          <Navbar.Brand href="#home"><img src={logo}/></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto"> 
