@@ -11,7 +11,9 @@ class AllFlashcards extends React.Component {
             <main className='AllFlashcards d-flex align-items-center'>
                                 <style type="text/css">
                     {`
-                    .maincard { height:60vh;}`}
+                    .maincard { height:60vh;}
+                    .card {border-radius: 20px;}
+                    .AllFlashcards {background-color: rgb(250,249,248);}`}
                 </style>
                 <Container>
                     <Row><Col>

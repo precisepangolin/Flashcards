@@ -18,9 +18,15 @@ class FlashcardFolder extends React.Component {
             <main className="FlashcardFolder">
                                 <style type="text/css">
                     {`
+                    .FlashcardFolder {margin: 10px;}
                     .folder-edit .dropdown-toggle.nav-link::after { display:none;}
                     .folder-edit { font-size: 30pt; margin: -10px; padding-top: 0;}
-                 
+                 .FlashcardFolder .card button {background-color:white; border: 3px solid rgb(150, 120, 255);
+                     border-radius: 30px; color: rgb(150, 120, 255);
+                    padding: 10px 20px;}
+                    .FlashcardFolder .card button:hover {background-color: rgb(150, 120, 255); color: white;}
+                    .FlashcardFolder .card button:active {background-color: rgb(255, 200, 120); color: white;
+                    border-color: rgb(255, 200, 120);}
                     `}
                 </style>
 <Card><Card.Body>
