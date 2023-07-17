@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Flashcard from './Flashcard';
+import FlashcardFolder from './FlashcardFolder';
 
 class AllFlashcards extends React.Component {
     render() {
@@ -18,9 +18,9 @@ class AllFlashcards extends React.Component {
                     <Card className="gradient-bg maincard">
                         <Card.Body>
                             <Card.Title align="left"><Container><Row><Col>Twoje fiszki</Col>
-                            <Col align="right">+</Col></Row></Container></Card.Title>
-                            <Flashcard/>
-                            <Flashcard/>
+                            <Col align="right">╀</Col></Row></Container></Card.Title>
+                            <FlashcardFolder name="Polski" done="1" todo="30"/>
+                            <FlashcardFolder name="Koreański" done="0" todo="25"/>
                        
                         </Card.Body>
                     </Card>
@@ -29,7 +29,7 @@ class AllFlashcards extends React.Component {
                     <Card className='gradient-bg maincard'>
                         <Card.Body>
                             <Card.Title align="left">Nasze fiszki</Card.Title>
-                           <Flashcard/>
+                           <FlashcardFolder name="Fiński" done="12" todo="40"/>
                         </Card.Body>
                     </Card>
                     </Col>
