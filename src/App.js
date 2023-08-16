@@ -44,8 +44,8 @@ Date: {item.date} Temp: {item.temperatureC}
 
       <Router>
         <Routes>
-          <Route exact path='/' element={<Home />} />
-          <Route path='/guess' element={<Guess />} />
+          <Route exact path='/' element={<Home items={this.state.items} />} />
+          <Route path='/guess' element={<Guess items={this.state.items} />} />
           </Routes>
           </Router>
 
