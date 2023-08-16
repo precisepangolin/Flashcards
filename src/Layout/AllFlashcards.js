@@ -11,10 +11,10 @@ class AllFlashcards extends React.Component {
             <main className='AllFlashcards d-flex align-items-center'>
                                 <style type="text/css">
                     {`
-                    .maincard { height:60vh; display: flex; flex-direction: column; overflow: hidden;}
+                    .maincard { height:70vh; display: flex; flex-direction: column; overflow: hidden;}
                     .card {border-radius: 20px;}
                     .AllFlashcards {background-color: rgb(250,249,248);}
-                    .folder-container { overflow-y: auto; max-height: 50vh;}`}
+                    .folder-container { overflow-y: auto; max-height: 60vh;}`}
                 </style>
                 <Container>
                     <Row><Col>
