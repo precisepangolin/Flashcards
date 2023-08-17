@@ -27,12 +27,7 @@ class Navigation extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto"> 
-          <NavDropdown title="Fiszki" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Moje fiszki</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Fiszki od fiszek
-              </NavDropdown.Item>
-            </NavDropdown>
+          <Nav.Link href="/all">Fiszki</Nav.Link>
             <Nav.Link href="#link">Analiza</Nav.Link>
           </Nav>
           <Nav className="justify-content-end">

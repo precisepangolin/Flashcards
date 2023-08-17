@@ -14,7 +14,7 @@ class Home extends React.Component {
   items = [];
   render() {
       return (
-        <main className='AllFlashcards d-flex align-items-center'>
+        <main className='Home d-flex align-items-center'>
         <style type="text/css">
 {`
 .maincard { height:70vh; display: flex; flex-direction: column; overflow: hidden;}
@@ -32,9 +32,9 @@ class Home extends React.Component {
     <Col align="right">╀</Col></Row></Container></Card.Title>
     <Container className="folder-container">
 
-    {this.props.items.map((item) => (
+    {this.props.items[0].map((item) => (
         <ol key = { item.id} >
-<FlashcardFolder item = {item} done="0" todo="25"/>
+<FlashcardFolder item = {item}/>
 </ol>))}
 
 
@@ -49,9 +49,9 @@ class Home extends React.Component {
     <Card.Title align="left">Nasze fiszki</Card.Title>
     <Container className="folder-container">
       
-    {this.props.items.map((item) => (
+    {this.props.items[1].map((item) => (
         <ol key = { item.id} >
-<FlashcardFolder item = {item} done="0" todo="25"/>
+<FlashcardFolder item = {item}/>
 </ol>))}
 
    </Container>

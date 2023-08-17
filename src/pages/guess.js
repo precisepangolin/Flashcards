@@ -4,43 +4,30 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-
-class Guess extends React.Component {
-  constructor(props) {
-      super(props);
-  }
-  items = [];
-  name= "";
-  done = 0;
-  todo = 1;
-  sample = "bb";
-  render() {
+function Guess() {
+    const locationState = useLocation().state;
+    var counter = 1;
       return (
     <main className='Guess'>
       <Container>
 
       <Card className="gradient-bg maincard">
       <Card.Body>
-                            <Card.Title align="center">{this.props.name}</Card.Title>
+                            <Card.Title align="center">{locationState.item.name}</Card.Title>
 <Row><Col>
   <Container className="col-sm-6 d-flex justify-content-start"><Button>Poprzednia</Button></Container>
   </Col>
   <Col>
- <Container className="d-flex col-sm-6 justify-content-center">{this.props.done}/{this.props.todo}</Container>
+ <Container className="d-flex col-sm-6 justify-content-center">{counter}/{locationState.item.totalFlashcards}</Container>
  </Col>
   <Col>
- <Container className="d-flex col-sm-6 justify-content-end"><Button>Umiem</Button></Container>
+ <Container className="d-flex col-sm-6 justify-content-end"><Button>Następna</Button></Container>
  </Col>
  </Row>
-<Card>{this.props.sample}</Card>
-<Button variant="primary">Analiza</Button> <Button variant="primary">To trudne</Button>
-{this.props.items.map((item) => (
-        <ol key = { item.id} >
-Date: {item.date} Temp: {item.temperatureC}
-
-        </ol>
-      ))}
+<Card>{locationState.item.flashcards[0].frontSide}</Card>
+<Button variant="primary">Umiem</Button> <Button variant="primary">To trudne</Button>
 
                             </Card.Body>
         </Card>
@@ -48,5 +35,5 @@ Date: {item.date} Temp: {item.temperatureC}
       </main>
   )
 }
-}
+
 export default Guess;

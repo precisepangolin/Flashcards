@@ -19,7 +19,7 @@ class App extends React.Component {
   }
 
 componentDidMount() {
-  fetch("https://localhost:7025/WeatherForecast")
+  fetch("https://localhost:7025/api/folders")
   .then((res) => res.json())
   .then((json) => {
     this.setState({
@@ -35,21 +35,13 @@ render() {
   return (
     <div className="App">
       <Navigation />
-      {items.map((item) => (
-        <ol key = { item.id} >
-Date: {item.date} Temp: {item.temperatureC}
-
-        </ol>
-      ))}
-
       <Router>
         <Routes>
           <Route exact path='/' element={<Home items={this.state.items} />} />
+          <Route exact path='/all' element={<AllFlashcards items={this.state.items} />} />
           <Route path='/guess' element={<Guess items={this.state.items} />} />
           </Routes>
-          </Router>
-
-       
+          </Router>     
        <Footer />
     </div>
   );

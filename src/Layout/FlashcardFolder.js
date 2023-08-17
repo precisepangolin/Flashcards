@@ -37,7 +37,7 @@ class FlashcardFolder extends React.Component {
 <Card><Card.Body>
     <Container><Row>
     <Container className="col-sm-6 d-flex justify-content-start">
-    <Card.Title>{this.props.item.date}</Card.Title>
+    <Card.Title>{this.props.item.name}</Card.Title>
  </Container><Container className="d-flex col-sm-6 justify-content-end">
     <NavDropdown title="⋮" className="folder-edit">
               <NavDropdown.Item href="#action/3.2">Edytuj</NavDropdown.Item>
@@ -46,8 +46,8 @@ class FlashcardFolder extends React.Component {
   </Container>
   </Row>
   </Container>
-<Card.Text>{this.props.done}/{this.props.todo} fiszek opanowanych</Card.Text>
-<Button variant="primary">Analiza</Button> <Link to={{pathname: `/guess/`, state: {item} }}><Button>Trenuj</Button></Link>
+<Card.Text>{this.props.item.masteredCount}/{this.props.item.totalFlashcards} fiszek opanowanych</Card.Text>
+<Button variant="primary">Analiza</Button> <Link to="/guess/" state={{ item}}><Button>Trenuj</Button></Link>
 </Card.Body></Card>
 </Container>
             </main>
