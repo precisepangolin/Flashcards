@@ -20,20 +20,51 @@ async function getWords() {
         console.error(err);
     }
 }
+async function getWords2() {
+    console.log("Running getting words2")
+    try {
+        const response = await axios.get('http://localhost:7055/words');
+        const words = response.data;
+        //var index = document.getElementById('index').innerHTML
+        console.log(response.data)
+        //console.log(words[index-1])
+        var index = UpdateCounter();
+        console.log(words[index-1]['Words'])
+        console.log(words[index-1])
+        return words[index-1];
+        // Use the data in your React components
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 
 async function updateWords() {
     console.log("Running updating word")
     try {
-    const word = await getWords();
+    const word = await getWords2();
     const listElement = document.getElementById('words-list');
-    listElement.innerHTML = word;
+    listElement.innerHTML = word['word'];
     } catch (err) {
         console.error(err);
+    }
+}
+
+function UpdateCounter(){
+    try {
+        var counter = document.getElementById('index').innerHTML
+        counter++
+        document.getElementById('index').innerHTML = counter
+        return counter;
+    } catch (err){
+        var counter = 0;
+        return counter;
     }
 }
 function Guess() {
     const locationState = useLocation().state;
     var counter = 1;
+    
       return (
     <main className='Guess'>
       <Container>
@@ -53,6 +84,7 @@ function Guess() {
  </Row>
 <Card>{locationState.item.flashcards[0].frontSide}</Card>
           <Card id='words-list'></Card>
+          <Card id ='index'></Card>
 <Button variant="primary">Umiem</Button> <Button variant="primary">To trudne</Button>
 
                             </Card.Body>
