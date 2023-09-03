@@ -121,6 +121,14 @@ class Guess extends React.Component {
         }
     };
 
+    handleKeyDown = (event) => {
+        // Check if the pressed key is the "j" key
+        if (event.key === 'j') {
+            // Call the handleRefresh function
+            this.handleRefresh();
+        }
+    }
+
     componentDidMount() {
         Promise.all([
             fetch("https://localhost:7025/api/folders"),
@@ -138,6 +146,7 @@ class Guess extends React.Component {
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
+        window.addEventListener('keydown', this.handleKeyDown);
     }
 
     render() {
@@ -162,7 +171,7 @@ class Guess extends React.Component {
                                 </Col>
                                 <Col>
                                     <Container
-                                        className="d-flex col-sm-6 justify-content-end"><Button>Następna</Button></Container>bn
+                                        className="d-flex col-sm-6 justify-content-end"><Button onClick={this.handleRefresh}>Następna</Button></Container>bn
                                 </Col>
                             </Row>
                             <Card>{item ? item.flashcards : 'Error flashcards...'}</Card>
@@ -172,8 +181,10 @@ class Guess extends React.Component {
                             {/*<Card>{words}</Card>*/}
                             <Card id='index'></Card>
                             {this.state.showHint && <div id='hint'>{this.state.hint}</div>}
-                            <Button variant="primary">Umiem</Button>
+                            <Button onClick={this.handleRefresh}>Umiem</Button>
+                           
                             <Button onClick={this.handleClick}>Show Hint</Button>
+                            
                             <Button onClick={this.handleRefresh}>To trudne</Button>
 
 
