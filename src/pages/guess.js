@@ -88,7 +88,8 @@ class Guess extends React.Component {
         this.state = {
             hint: '',
             data: null,
-            words: null
+            words: null,
+            showHint: false
         };
     }
 
@@ -106,6 +107,7 @@ class Guess extends React.Component {
                     items: json1,
                     words: json2,
                     DataisLoaded: true,
+                    showHint: false
                 });
             })
             .catch((error) => {
@@ -114,8 +116,8 @@ class Guess extends React.Component {
     }
 
     handleClick = () => {
-        if (this.state.words && this.state.words[0]) {
-            this.setState({ hint: this.state.words[0].hint });
+        if (this.state.words && this.state.words[0] && !this.showHint)  {
+            this.setState({ hint: this.state.words[0].hint,showHint:true });
         }
     };
 
@@ -169,7 +171,7 @@ class Guess extends React.Component {
 
                             {/*<Card>{words}</Card>*/}
                             <Card id='index'></Card>
-                            <div id='hint'>{this.state.hint}</div>
+                            {this.state.showHint && <div id='hint'>{this.state.hint}</div>}
                             <Button variant="primary">Umiem</Button>
                             <Button onClick={this.handleClick}>Show Hint</Button>
                             <Button onClick={this.handleRefresh}>To trudne</Button>
