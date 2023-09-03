@@ -87,8 +87,8 @@ class Guess extends React.Component {
         super(props);
         this.state = {
             hint: '',
-            data:null,
-            words : null
+            data: null,
+            words: null
         };
     }
 
@@ -107,26 +107,45 @@ class Guess extends React.Component {
                     words: json2,
                     DataisLoaded: true,
                 });
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
             });
     }
+
     handleClick = () => {
-        this.setState({ hint: this.props.words[0].hint });
+        if (this.state.words && this.state.words[0]) {
+            this.setState({ hint: this.state.words[0].hint });
+        }
     };
+
+    componentDidMount() {
+        Promise.all([
+            fetch("https://localhost:7025/api/folders"),
+            fetch("http://localhost:7055/words"),
+        ])
+            .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+            .then(([json1, json2]) => {
+                console.log('Words data:', json2);
+                this.setState({
+                    items: json1,
+                    words: json2,
+                    DataisLoaded: true,
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
     render() {
-        // console.log('handleRefresh function:', this.handleRefresh);
-
-        // const locationState = useLocation().state;
         var counter = 1;
-        var word = this.props.words;
+        var word = this.state.words;
         var item = this.props.items
-        
-    
-
 
         return (
             <main className='Guess'>
                 <Container>
-
                     <Card className="gradient-bg maincard">
                         <Card.Body>
                             <Card.Title align="center">{item.name}</Card.Title>
@@ -136,7 +155,7 @@ class Guess extends React.Component {
                             </Col>
                                 <Col>
                                     <Container
-                                       className="d-flex col-sm-6 justify-content-center">{counter}/{item.totalFlashcards}>
+                                        className="d-flex col-sm-6 justify-content-center">{counter}/{item.totalFlashcards}>
                                     </Container>
                                 </Col>
                                 <Col>
@@ -144,9 +163,9 @@ class Guess extends React.Component {
                                         className="d-flex col-sm-6 justify-content-end"><Button>Następna</Button></Container>bn
                                 </Col>
                             </Row>
-                            <Card>{item  ? item.flashcards : 'Error flashcards...'}</Card>
-                            
-                            <Card id='words-list'>{word[0].word}</Card>
+                            <Card>{item ? item.flashcards : 'Error flashcards...'}</Card>
+
+                            <Card id='words-list'>{word && word[0] && word[0].word}</Card>
 
                             {/*<Card>{words}</Card>*/}
                             <Card id='index'></Card>
@@ -154,7 +173,7 @@ class Guess extends React.Component {
                             <Button variant="primary">Umiem</Button>
                             <Button onClick={this.handleClick}>Show Hint</Button>
                             <Button onClick={this.handleRefresh}>To trudne</Button>
-                            
+
 
                         </Card.Body>
                     </Card>
@@ -162,5 +181,6 @@ class Guess extends React.Component {
             </main>
         )
     }
-    }
+}
+
 export default Guess;
