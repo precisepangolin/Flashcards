@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
@@ -7,48 +7,67 @@ import { Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import axios, {get} from 'axios';
 
-window.addEventListener('load', updateWords);
-async function getWords() {
-    console.log("Running getting words f")
-    try {
-        const response = await axios.get('http://localhost:7055/words');
-        const words = response.data[0]['lastname'];
-        console.log(response.data[0]['lastname'])
-        return words;
-        // Use the data in your React components
-    } catch (err) {
-        console.error(err);
-    }
-}
-async function getWords2() {
-    console.log("Running getting words2")
-    try {
-        const response = await axios.get('http://localhost:7055/words');
-        const words = response.data;
-        //var index = document.getElementById('index').innerHTML
-        console.log(response.data)
-        //console.log(words[index-1])
-        var index = UpdateCounter();
-        console.log(words[index-1]['Words'])
-        console.log(words[index-1])
-        return words[index-1];
-        // Use the data in your React components
-    } catch (err) {
-        console.error(err);
-    }
-}
+//window.addEventListener('load', updateWords);
+// async function getWords() {
+//     console.log("Running getting words f")
+//     try {
+//         const response = await axios.get('http://localhost:7055/words');
+//         const words = response.data[0]['lastname'];
+//         console.log(response.data[0]['lastname'])
+//         return words;
+//         // Use the data in your React components
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
+// async function getWords2() {
+//     console.log("Running getting words2")
+//     try {
+//         const response = await axios.get('http://localhost:7055/words');
+//         const words = response.data;
+//         //var index = document.getElementById('index').innerHTML
+//         console.log(response.data)
+//         //console.log(words[index-1])
+//         var index = UpdateCounter();
+//         console.log(words[index-1]['Words'])
+//         console.log(words[index-1])
+//         return words[index-1];
+//         // Use the data in your React components
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
+
+// async function GetWords3() {
+//     console.log("Running getting words2")
+//     try {
+//         useEffect(async () => {
+//             const response = await axios.get('http://localhost:7055/words');
+//
+//             const words = response.data;
+//            
+//             console.log(words[index - 1]['Words'])
+//             console.log(words[index - 1])
+//            
+//         },[])
+//         return words[index - 1];
+//         // Use the data in your React components
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
 
-async function updateWords() {
-    console.log("Running updating word")
-    try {
-    const word = await getWords2();
-    const listElement = document.getElementById('words-list');
-    listElement.innerHTML = word['word'];
-    } catch (err) {
-        console.error(err);
-    }
-}
+// function updateWords() {
+//     console.log("Running updating word")
+//     try {
+//     const word =  getWords2();
+//     const listElement = document.getElementById('words-list');
+//     listElement.innerHTML = word['word'];
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
 function UpdateCounter(){
     try {
@@ -61,37 +80,87 @@ function UpdateCounter(){
         return counter;
     }
 }
-function Guess() {
-    const locationState = useLocation().state;
-    var counter = 1;
+
+
+class Guess extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hint: '',
+            data:null,
+            words : null
+        };
+    }
+
+    handleRefresh = () => {
+        console.log('handleRefresh called');
+        // Fetch new data and update the state
+        Promise.all([
+            fetch("https://localhost:7025/api/folders"),
+            fetch("http://localhost:7055/words"),
+        ])
+            .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+            .then(([json1, json2]) => {
+                console.log('Words data:', json2);
+                this.setState({
+                    items: json1,
+                    words: json2,
+                    DataisLoaded: true,
+                });
+            });
+    }
+    handleClick = () => {
+        this.setState({ hint: this.props.words[0].hint });
+    };
+    render() {
+        // console.log('handleRefresh function:', this.handleRefresh);
+
+        // const locationState = useLocation().state;
+        var counter = 1;
+        var word = this.props.words;
+        var item = this.props.items
+        
     
-      return (
-    <main className='Guess'>
-      <Container>
 
-      <Card className="gradient-bg maincard">
-      <Card.Body>
-                            <Card.Title align="center">{locationState.item.name}</Card.Title>
-<Row><Col>
-  <Container className="col-sm-6 d-flex justify-content-start"><Button>Poprzednia</Button></Container>
-  </Col>
-  <Col>
- <Container className="d-flex col-sm-6 justify-content-center">{counter}/{locationState.item.totalFlashcards}</Container>
- </Col>
-  <Col>
- <Container className="d-flex col-sm-6 justify-content-end"><Button>Następna</Button></Container>
- </Col>
- </Row>
-<Card>{locationState.item.flashcards[0].frontSide}</Card>
-          <Card id='words-list'></Card>
-          <Card id ='index'></Card>
-<Button variant="primary">Umiem</Button> <Button variant="primary">To trudne</Button>
 
-                            </Card.Body>
-        </Card>
-      </Container>
-      </main>
-  )
-}
+        return (
+            <main className='Guess'>
+                <Container>
 
+                    <Card className="gradient-bg maincard">
+                        <Card.Body>
+                            <Card.Title align="center">{item.name}</Card.Title>
+                            <Row><Col>
+                                <Container
+                                    className="col-sm-6 d-flex justify-content-start"><Button>Poprzednia</Button></Container>
+                            </Col>
+                                <Col>
+                                    <Container
+                                       className="d-flex col-sm-6 justify-content-center">{counter}/{item.totalFlashcards}>
+                                    </Container>
+                                </Col>
+                                <Col>
+                                    <Container
+                                        className="d-flex col-sm-6 justify-content-end"><Button>Następna</Button></Container>bn
+                                </Col>
+                            </Row>
+                            <Card>{item  ? item.flashcards : 'Error flashcards...'}</Card>
+                            
+                            <Card id='words-list'>{word[0].word}</Card>
+
+                            {/*<Card>{words}</Card>*/}
+                            <Card id='index'></Card>
+                            <div id='hint'>{this.state.hint}</div>
+                            <Button variant="primary">Umiem</Button>
+                            <Button onClick={this.handleClick}>Show Hint</Button>
+                            <Button onClick={this.handleRefresh}>To trudne</Button>
+                            
+
+                        </Card.Body>
+                    </Card>
+                </Container>
+            </main>
+        )
+    }
+    }
 export default Guess;
