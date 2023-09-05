@@ -69,17 +69,17 @@ import axios, {get} from 'axios';
 //     }
 // }
 
-function UpdateCounter(){
-    try {
-        var counter = document.getElementById('index').innerHTML
-        counter++
-        document.getElementById('index').innerHTML = counter
-        return counter;
-    } catch (err){
-        var counter = 0;
-        return counter;
-    }
-}
+// function UpdateCounter(){
+//     try {
+//         var counter = document.getElementById('index').innerHTML
+//         counter++
+//         document.getElementById('index').innerHTML = counter
+//         return counter;
+//     } catch (err){
+//         var counter = 0;
+//         return counter;
+//     }
+// }
 
 
 class Guess extends React.Component {
@@ -129,6 +129,28 @@ class Guess extends React.Component {
         }
     }
 
+    handleUpdate = () => {
+        const word = this.state.words[0].word;
+        axios.patch(`http://localhost:3000/update_guessed/${word}`)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    handleUpdateWrong = () => {
+        const word = this.state.words[0].word;
+        axios.patch(`http://localhost:3000/update_not_guessed/${word}`)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
     componentDidMount() {
         Promise.all([
             fetch("https://localhost:7025/api/folders"),
@@ -161,8 +183,8 @@ class Guess extends React.Component {
                         <Card.Body>
                             <Card.Title align="center">{item.name}</Card.Title>
                             <Row><Col>
-                                <Container
-                                    className="col-sm-6 d-flex justify-content-start"><Button>Poprzednia</Button></Container>
+                                {/*<Container*/}
+                                {/*    className="col-sm-6 d-flex justify-content-start"><Button>Poprzednia</Button></Container>*/}
                             </Col>
                                 <Col>
                                     <Container
@@ -170,8 +192,8 @@ class Guess extends React.Component {
                                     </Container>
                                 </Col>
                                 <Col>
-                                    <Container
-                                        className="d-flex col-sm-6 justify-content-end"><Button onClick={this.handleRefresh}>Następna</Button></Container>bn
+                                    {/*<Container*/}
+                                    {/*    className="d-flex col-sm-6 justify-content-end"><Button onClick={this.handleRefresh}>Następna</Button></Container>*/}
                                 </Col>
                             </Row>
                             <Card>{item ? item.flashcards : 'Error flashcards...'}</Card>
@@ -181,11 +203,13 @@ class Guess extends React.Component {
                             {/*<Card>{words}</Card>*/}
                             <Card id='index'></Card>
                             {this.state.showHint && <div id='hint'>{this.state.hint}</div>}
-                            <Button onClick={this.handleRefresh}>Umiem</Button>
+                            
+                            <Button onClick={() => { this.handleRefresh(); this.handleUpdateWrong(); }}>To trudne</Button>
                            
                             <Button onClick={this.handleClick}>Show Hint</Button>
+
+                            <Button onClick={() => { this.handleRefresh(); this.handleUpdate(); }} >Umiem</Button>
                             
-                            <Button onClick={this.handleRefresh}>To trudne</Button>
 
 
                         </Card.Body>
