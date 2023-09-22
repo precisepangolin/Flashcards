@@ -47,7 +47,7 @@ class FlashcardFolder extends React.Component {
   </Row>
   </Container>
 <Card.Text>{this.props.item.masteredCount}/{this.props.item.totalFlashcards} fiszek opanowanych</Card.Text>
-<Button variant="primary">Analiza</Button> <Link to="/guess/" state={{ item}}><Button>Trenuj</Button></Link>
+    <Link to="/stats/" ><Button variant="primary">Analiza</Button> </Link><Link to="/guess/" ><Button>Trenuj</Button></Link>
 </Card.Body></Card>
 </Container>
             </main>

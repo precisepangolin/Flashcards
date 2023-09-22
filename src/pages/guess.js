@@ -154,14 +154,16 @@ class Guess extends React.Component {
     componentDidMount() {
         Promise.all([
             fetch("https://localhost:7025/api/folders"),
-            fetch("http://localhost:7055/words"),
+            fetch("http://localhost:7055/words")
         ])
             .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
             .then(([json1, json2]) => {
                 console.log('Words data:', json2);
+                
                 this.setState({
                     items: json1,
                     words: json2,
+                   
                     DataisLoaded: true,
                 });
             })
@@ -201,6 +203,7 @@ class Guess extends React.Component {
                             <Card id='words-list'>{word && word[0] && word[0].word}</Card>
 
                             {/*<Card>{words}</Card>*/}
+                            TODO{/*gdzie tlumaczenie slowa?*/}
                             <Card id='index'></Card>
                             {this.state.showHint && <div id='hint'>{this.state.hint}</div>}
                             

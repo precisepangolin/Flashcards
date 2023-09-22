@@ -7,6 +7,7 @@ import Footer from './Layout/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages';
 import Guess from './pages/guess';
+import Stats from "./pages/stats";
 
 class App extends React.Component {
     constructor(props) {
@@ -47,6 +48,7 @@ class App extends React.Component {
                             <Route exact path='/' element={<Home items={this.state.items}/>}/>
                             <Route exact path='/all' element={<AllFlashcards items={this.state.items}/>}/>
                             <Route path='/guess' element={<Guess items={this.state.items}/>}/>
+                            <Route path='/stats' element={<Stats stats={this.state.stats}/>}/>}/>
                         </Routes>
                     </Router>
                     <Footer/>

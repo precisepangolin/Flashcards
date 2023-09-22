@@ -28,7 +28,7 @@ class Navigation extends React.Component {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto"> 
           <Nav.Link href="/all">Fiszki</Nav.Link>
-            <Nav.Link href="#link">Analiza</Nav.Link>
+            <Nav.Link href="/stats">Analiza</Nav.Link>
           </Nav>
           <Nav className="justify-content-end">
           <Nav.Link href="#link">Premium</Nav.Link>
