@@ -6,80 +6,8 @@ import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import axios, {get} from 'axios';
+import Timer from './timer'; // Import the Timer component
 
-//window.addEventListener('load', updateWords);
-// async function getWords() {
-//     console.log("Running getting words f")
-//     try {
-//         const response = await axios.get('http://localhost:7055/words');
-//         const words = response.data[0]['lastname'];
-//         console.log(response.data[0]['lastname'])
-//         return words;
-//         // Use the data in your React components
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
-// async function getWords2() {
-//     console.log("Running getting words2")
-//     try {
-//         const response = await axios.get('http://localhost:7055/words');
-//         const words = response.data;
-//         //var index = document.getElementById('index').innerHTML
-//         console.log(response.data)
-//         //console.log(words[index-1])
-//         var index = UpdateCounter();
-//         console.log(words[index-1]['Words'])
-//         console.log(words[index-1])
-//         return words[index-1];
-//         // Use the data in your React components
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
-
-// async function GetWords3() {
-//     console.log("Running getting words2")
-//     try {
-//         useEffect(async () => {
-//             const response = await axios.get('http://localhost:7055/words');
-//
-//             const words = response.data;
-//            
-//             console.log(words[index - 1]['Words'])
-//             console.log(words[index - 1])
-//            
-//         },[])
-//         return words[index - 1];
-//         // Use the data in your React components
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
-
-
-// function updateWords() {
-//     console.log("Running updating word")
-//     try {
-//     const word =  getWords2();
-//     const listElement = document.getElementById('words-list');
-//     listElement.innerHTML = word['word'];
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
-
-// function UpdateCounter(){
-//     try {
-//         var counter = document.getElementById('index').innerHTML
-//         counter++
-//         document.getElementById('index').innerHTML = counter
-//         return counter;
-//     } catch (err){
-//         var counter = 0;
-//         return counter;
-//     }
-// }
 
 
 class Guess extends React.Component {
@@ -90,7 +18,8 @@ class Guess extends React.Component {
             data: null,
             words: null,
             showHint: false,
-            translation:''
+            translation:'',
+            timerKey: 0
         };
     }
 
@@ -109,13 +38,15 @@ class Guess extends React.Component {
                     words: json2,
                     DataisLoaded: true,
                     showHint: false,
-                    showAnswer: false
+                    showAnswer: false,
+                    timerKey: this.state.timerKey + 1, // Increment the timer key state
                 });
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
-    }
+    };
+
 
     handleClick = () => {
         if (this.state.words && this.state.words[0] && !this.showHint)  {
@@ -123,11 +54,11 @@ class Guess extends React.Component {
         }
     };
 
-    handleAnswer = () => {
-        if (this.state.words && this.state.words[0] && !this.showAnswer)  {
-            this.setState({ translation: this.state.words[0].translation,showAnswer:true });
-        }
-    };
+    // handleAnswer = () => {
+    //     if (this.state.words && this.state.words[0] && !this.showAnswer)  {
+    //         this.setState({ translation: this.state.words[0].translation,showAnswer:true });
+    //     }
+    // };
 
     handleKeyDown = (event) => {
         // Check if the pressed key is the "j" key
@@ -158,6 +89,8 @@ class Guess extends React.Component {
                 console.error(error);
             });
     }
+    
+    
 
     componentDidMount() {
         Promise.all([
@@ -210,8 +143,7 @@ class Guess extends React.Component {
 
                             <Card id='words-list'>{word && word[0] && word[0].word}</Card>
 
-                            {/*<Card>{words}</Card>*/}
-                            TODO{/*gdzie tlumaczenie slowa?*/}
+                            
                             <Card id='index'></Card>
                             {this.state.showHint && <div id='hint'>{this.state.hint}</div>}
                             <Card id='answer'></Card>
@@ -220,9 +152,10 @@ class Guess extends React.Component {
                             <Button onClick={() => { this.handleRefresh(); this.handleUpdateWrong(); }}>To trudne</Button>
                            
                             <Button onClick={this.handleClick}>Show Hint</Button>
-                            <Button onClick={this.handleAnswer}>Show Answer</Button>
+                            {/*limit api wykorzystany na razie<Button onClick={this.handleAnswer}>Show Answer</Button>*/}
 
                             <Button onClick={() => { this.handleRefresh(); this.handleUpdate(); }} >Umiem</Button>
+                            <Timer key={this.state.timerKey}  />
                             
 
 
