@@ -89,7 +89,8 @@ class Guess extends React.Component {
             hint: '',
             data: null,
             words: null,
-            showHint: false
+            showHint: false,
+            translation:''
         };
     }
 
@@ -107,7 +108,8 @@ class Guess extends React.Component {
                     items: json1,
                     words: json2,
                     DataisLoaded: true,
-                    showHint: false
+                    showHint: false,
+                    showAnswer: false
                 });
             })
             .catch((error) => {
@@ -118,6 +120,12 @@ class Guess extends React.Component {
     handleClick = () => {
         if (this.state.words && this.state.words[0] && !this.showHint)  {
             this.setState({ hint: this.state.words[0].hint,showHint:true });
+        }
+    };
+
+    handleAnswer = () => {
+        if (this.state.words && this.state.words[0] && !this.showAnswer)  {
+            this.setState({ translation: this.state.words[0].translation,showAnswer:true });
         }
     };
 
@@ -206,10 +214,13 @@ class Guess extends React.Component {
                             TODO{/*gdzie tlumaczenie slowa?*/}
                             <Card id='index'></Card>
                             {this.state.showHint && <div id='hint'>{this.state.hint}</div>}
+                            <Card id='answer'></Card>
+                            {this.state.showAnswer && <div id='answer'>{this.state.translation}</div>}
                             
                             <Button onClick={() => { this.handleRefresh(); this.handleUpdateWrong(); }}>To trudne</Button>
                            
                             <Button onClick={this.handleClick}>Show Hint</Button>
+                            <Button onClick={this.handleAnswer}>Show Answer</Button>
 
                             <Button onClick={() => { this.handleRefresh(); this.handleUpdate(); }} >Umiem</Button>
                             
