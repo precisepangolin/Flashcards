@@ -7,6 +7,9 @@ import Footer from './Layout/Footer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages';
 import Guess from './pages/guess';
+import Register from './pages/register';
+import Login from './pages/login';
+import Profile from "./pages/profile";
 
 class App extends React.Component {
     constructor(props) {
@@ -34,22 +37,22 @@ class App extends React.Component {
             if (!DataisLoaded) {
                 return <div>Loading...</div>;
             }
-
-
             return (
 
                 <div className="App">
-
-
-                    <Navigation/>
                     <Router>
+                    <Navigation/>
+                    
                         <Routes>
                             <Route exact path='/' element={<Home items={this.state.items}/>}/>
                             <Route exact path='/all' element={<AllFlashcards items={this.state.items}/>}/>
                             <Route path='/guess' element={<Guess items={this.state.items}/>}/>
+                            <Route path='/register' element={<Register items={this.state.items}/>}/>
+                            <Route path='/login' element={<Login items={this.state.items}/>}/>
+                            <Route path="/profile" element={<Profile />} />
                         </Routes>
-                    </Router>
                     <Footer/>
+                    </Router>
                 </div>
             );
         }

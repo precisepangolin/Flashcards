@@ -4,9 +4,31 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import logo from '../fiszki.png';
+import handleLoginSuccess from '../pages/login'; // Import the Login component
+
 
 class Navigation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoggedIn: false, // Set to true when the user is logged in
+        };
+    }
+
+    componentDidMount() {
+        // Check if a valid token exists in localStorage when the component mounts
+        const token = localStorage.getItem('token');
+        this.setState({ isLoggedIn: !!token }); // Update isLoggedIn based on the presence of the token
+    }
+
+    handleLogout = () => {
+        // Clear the token from localStorage and set isLoggedIn to false
+        localStorage.removeItem('token');
+        this.setState({ isLoggedIn: false });
+        window.location.href = '/login';
+    };
     render() {
+        const { isLoggedIn } = this.state;
         return (
             <main className="Navigation">
                 <style type="text/css">
@@ -31,8 +53,20 @@ class Navigation extends React.Component {
             <Nav.Link href="#link">Analiza</Nav.Link>
           </Nav>
           <Nav className="justify-content-end">
-          <Nav.Link href="#link">Premium</Nav.Link>
-          <Nav.Link href="#link">Twoje konto</Nav.Link>
+              {isLoggedIn ? (
+                  // Render "Profile" link when logged in
+                  <>
+                      <Nav.Link href="/profile">Profile</Nav.Link>
+                      <Nav.Link onClick={this.handleLogout}>Log Out</Nav.Link>
+                  </>
+              ) : (
+                  // Render other links when not logged in
+                  <>
+                    <Nav.Link href="#link">Premium</Nav.Link>
+                    <Nav.Link href="/register/">Rejestracja</Nav.Link>
+                    <Nav.Link href="/login/">Sign in</Nav.Link>
+                  </>
+              )}
           </Nav>
         </Navbar.Collapse>
         </Container>
